@@ -47,7 +47,7 @@
     var keys = Object.keys(object);
 
     if (Object.getOwnPropertySymbols) {
-      let symbols = Object.getOwnPropertySymbols(object);
+      var symbols = Object.getOwnPropertySymbols(object);
       if (enumerableOnly) symbols = symbols.filter(function (sym) {
         return Object.getOwnPropertyDescriptor(object, sym).enumerable;
       });
@@ -3843,7 +3843,7 @@
           var targetBCR = target.getBoundingClientRect();
 
           if (targetBCR.width || targetBCR.height) {
-
+            
             return [$(target)[offsetMethod]().top + offsetBase, targetSelector];
           }
         }

@@ -5143,7 +5143,10 @@
       } else if (callback) {
         callback();
       }
-    }
+    } // ----------------------------------------------------------------------
+    // the following methods are used to handle overflowing modals
+
+    // ----------------------------------------------------------------------
     ;
 
     _proto._adjustDialog = function _adjustDialog() {
