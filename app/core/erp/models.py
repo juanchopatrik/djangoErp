@@ -4,18 +4,6 @@ from datetime import datetime
 from core.erp.choices import gender_choices
 
 
-class Type(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Name')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Type'
-        verbose_name_plural = 'Types'
-        ordering = ['id']
-
-
 class Category(models.Model):
     name = models.CharField(max_length=150, verbose_name='Name')
 
@@ -28,32 +16,8 @@ class Category(models.Model):
         ordering = ['id']
 
 
-class Employee(models.Model):
-    categ = models.ManyToManyField(Category)
-    type = models.ForeignKey(Type, on_delete=models.CASCADE)
-    names = models.CharField(max_length=150, verbose_name='Name')
-    dni = models.CharField(max_length=10, unique=True, verbose_name='Dni')
-    date_joined = models.DateField(default=datetime.now, verbose_name='Register Date')
-    date_creation = models.DateTimeField(auto_now=True)
-    date_update = models.DateTimeField(auto_now_add=True)
-    age = models.PositiveIntegerField(default=0)
-    salary = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-    state = models.BooleanField(default=True)
-    gender = models.CharField(max_length=50)
-    avatar = models.ImageField(upload_to='avatar/%Y/%m/%d', null=True, blank=True)
-    cvitae = models.FileField(upload_to='cvitae/%Y/%m/%d', null=True, blank=True)
-
-    def __str__(self):
-        return self.names
-
-    class Meta:
-        verbose_name = 'Employee'
-        verbose_name_plural = 'Employees'
-        ordering = ['id']
-
-
 class Product(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
+    name = models.CharField(max_length=150, verbose_name='Name', unique=True)
     cate = models.ForeignKey(Category, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='product/%Y/%m/%d', null=True, blank=True)
     pvp = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
@@ -62,25 +26,25 @@ class Product(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Producto'
-        verbose_name_plural = 'Productos'
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
         ordering = ['id']
 
 
 class Client(models.Model):
-    names = models.CharField(max_length=150, verbose_name='Nombres')
-    surnames = models.CharField(max_length=150, verbose_name='Apellidos')
+    names = models.CharField(max_length=150, verbose_name='names')
+    surnames = models.CharField(max_length=150, verbose_name='LastNames')
     dni = models.CharField(max_length=10, unique=True, verbose_name='Dni')
-    birthday = models.DateField(default=datetime.now, verbose_name='Fecha de nacimiento')
-    address = models.CharField(max_length=150, null=True, blank=True, verbose_name='Dirección')
-    sexo = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Sexo')
+    birthday = models.DateField(default=datetime.now, verbose_name='BirthDay')
+    address = models.CharField(max_length=150, null=True, blank=True, verbose_name='Address')
+    gender = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Gender')
 
     def __str__(self):
         return self.names
 
     class Meta:
-        verbose_name = 'Cliente'
-        verbose_name_plural = 'Clientes'
+        verbose_name = 'Client'
+        verbose_name_plural = 'Clients'
         ordering = ['id']
 
 
@@ -95,8 +59,8 @@ class Sale(models.Model):
         return self.cli.names
 
     class Meta:
-        verbose_name = 'Venta'
-        verbose_name_plural = 'Ventas'
+        verbose_name = 'Sell'
+        verbose_name_plural = 'Sells'
         ordering = ['id']
 
 
@@ -111,6 +75,6 @@ class DetSale(models.Model):
         return self.prod.name
 
     class Meta:
-        verbose_name = 'Detalle de Venta'
-        verbose_name_plural = 'Detalle de Ventas'
+        verbose_name = 'Detail of Sell'
+        verbose_name_plural = 'Detail of Sells'
         ordering = ['id']
