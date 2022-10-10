@@ -1,23 +1,29 @@
 from django.db import models
 from datetime import datetime
 
+from django.forms import model_to_dict
+
 from core.erp.choices import gender_choices
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Name')
+    name = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
 
     def __str__(self):
         return self.name
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
     class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
+        verbose_name = 'Categoria'
+        verbose_name_plural = 'Categorias'
         ordering = ['id']
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Name', unique=True)
+    name = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
     cate = models.ForeignKey(Category, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='product/%Y/%m/%d', null=True, blank=True)
     pvp = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
@@ -26,25 +32,25 @@ class Product(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Product'
-        verbose_name_plural = 'Products'
+        verbose_name = 'Producto'
+        verbose_name_plural = 'Productos'
         ordering = ['id']
 
 
 class Client(models.Model):
-    names = models.CharField(max_length=150, verbose_name='names')
-    surnames = models.CharField(max_length=150, verbose_name='LastNames')
+    names = models.CharField(max_length=150, verbose_name='Nombres')
+    surnames = models.CharField(max_length=150, verbose_name='Apellidos')
     dni = models.CharField(max_length=10, unique=True, verbose_name='Dni')
-    birthday = models.DateField(default=datetime.now, verbose_name='BirthDay')
-    address = models.CharField(max_length=150, null=True, blank=True, verbose_name='Address')
-    gender = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Gender')
+    birthday = models.DateField(default=datetime.now, verbose_name='Fecha de nacimiento')
+    address = models.CharField(max_length=150, null=True, blank=True, verbose_name='Dirección')
+    sexo = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Sexo')
 
     def __str__(self):
         return self.names
 
     class Meta:
-        verbose_name = 'Client'
-        verbose_name_plural = 'Clients'
+        verbose_name = 'Cliente'
+        verbose_name_plural = 'Clientes'
         ordering = ['id']
 
 
@@ -59,8 +65,8 @@ class Sale(models.Model):
         return self.cli.names
 
     class Meta:
-        verbose_name = 'Sell'
-        verbose_name_plural = 'Sells'
+        verbose_name = 'Venta'
+        verbose_name_plural = 'Ventas'
         ordering = ['id']
 
 
@@ -75,6 +81,6 @@ class DetSale(models.Model):
         return self.prod.name
 
     class Meta:
-        verbose_name = 'Detail of Sell'
-        verbose_name_plural = 'Detail of Sells'
+        verbose_name = 'Detalle de Venta'
+        verbose_name_plural = 'Detalle de Ventas'
         ordering = ['id']
