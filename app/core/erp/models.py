@@ -7,7 +7,8 @@ from core.erp.choices import gender_choices
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
+    name = models.CharField(max_length=150, verbose_name='Name', unique=True)
+    desc = models.CharField(max_length=500, null=True, blank=True, verbose_name='Description')
 
     def __str__(self):
         return self.name
@@ -17,8 +18,8 @@ class Category(models.Model):
         return item
 
     class Meta:
-        verbose_name = 'Categoria'
-        verbose_name_plural = 'Categorias'
+        verbose_name = 'Catagory'
+        verbose_name_plural = 'Categories'
         ordering = ['id']
 
 
